@@ -10,6 +10,23 @@ exports.getProducts= async (req,res)=>{
     }
 }
 
+exports.getSingleProduct= async (req, res) => {
+    const productId = req.params.productId;
+  
+    try {
+      const product = await Product.findById(productId);
+  
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+  
+      res.json(product);
+    } catch (error) {
+      console.error(error, 'Error fetching product by ID');
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
 exports.addProduct = async(req,res)=>{
     try{
         const {title,description,price,image,category} = req.body;
