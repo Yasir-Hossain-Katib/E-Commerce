@@ -1,10 +1,19 @@
 import React from "react";
-import {useLocation,Link} from "react-router-dom";
+import {useLocation,useNavigate,Link} from "react-router-dom";
 
 
 const OrderPage = () => {
     const location=useLocation();
-    const {product}=location.state || {};
+    const navigate=useNavigate();
+    const {product,cart}=location.state || {};
+
+    const tran=()=>{
+        navigate('/transaction',{
+            state:{product,cart}
+        })
+    }
+
+
 
     return(
         <div>
@@ -15,9 +24,9 @@ const OrderPage = () => {
                     <p>Product: {product.title}</p>
                     <p>Price: {product.price}</p>
 
-                    <Link to="/transaction">
-                        <button>Place Order</button>
-                    </Link>
+                 
+                    <button onClick={tran}>Place Order</button>
+                   
                 </div>
 
             )}

@@ -1,11 +1,14 @@
 // Transaction.jsx
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 
 
 const Transaction = ({ cart, handlePaymentMethod }) => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+
+  const location=useLocation();
+  const {product}=location.state || {};
 
   const navigate = useNavigate();
 
@@ -23,7 +26,7 @@ const Transaction = ({ cart, handlePaymentMethod }) => {
           body: JSON.stringify({
             to:'yasirkatib12@gmail.com',
             subject:"Order Confirmation",
-            body:"Thank you for your order!Your payment of ${totalAmount} via ${paymentMethod} was successful."
+            body:`Thank you for your order!Your payment of ${product.price} via ${paymentMethod} was successful.`
           }),
 
         });
