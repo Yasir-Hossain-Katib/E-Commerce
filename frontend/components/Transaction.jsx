@@ -1,10 +1,13 @@
 // Transaction.jsx
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
-const Transaction = ({ cart, handlePayment }) => {
+const Transaction = ({ cart, handlePaymentMethod }) => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+
+  const navigate = useNavigate();
 
   const handlePaymentSelection = (method) => {
     setSelectedPaymentMethod(method);
@@ -12,7 +15,7 @@ const Transaction = ({ cart, handlePayment }) => {
 
   const handlePayment = async (paymentMethod,cart) => {
     try {
-        const response = await fetch('http://your-server/send-email', {
+        const response = await fetch('http://localhost:5000/api/send-email', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -24,6 +27,8 @@ const Transaction = ({ cart, handlePayment }) => {
           }),
 
         });
+
+        navigate('/confirmation');
 
           if (response.ok) {
             console.log('Email sent successfully');
@@ -75,7 +80,7 @@ const Transaction = ({ cart, handlePayment }) => {
         </label>
       </div>
 
-      <button onClick={() => handlePayment(selectedPaymentMethod, cart)}>Pay Now</button>
+      <button onClick={() => handlePayment(selectedPaymentMethod)}>Pay Now</button>
     </div>
   );
 };

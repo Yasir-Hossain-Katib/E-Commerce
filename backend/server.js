@@ -1,6 +1,7 @@
 const express=require("express")
 const authRoutes=require("./routes/authRoutes")
 const productRoutes=require("./routes/productRoutes")
+const mailRoutes=require("./routes/mailRoutes")
 const connectDB=require("./dbconfig.js")
 require("dotenv").config();
 const cors= require("cors");
@@ -16,6 +17,7 @@ app.use(cors({ origin: 'http://localhost:5173' }));
 
 app.use("/api/auth",authRoutes);
 app.use("/api",productRoutes);
+app.use("/api",mailRoutes);
 
 connectDB();
 
