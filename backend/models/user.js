@@ -18,6 +18,12 @@ const userSchema =new mongoose.Schema({
         type:String,
         required:true,
     },
+
+    userId: {
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        unique:true,
+    },
     isVerified: {
         type: Boolean,
         default: false, // You can set it to false by default

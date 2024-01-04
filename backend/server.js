@@ -3,6 +3,7 @@ const authRoutes=require("./routes/authRoutes")
 const productRoutes=require("./routes/productRoutes")
 const mailRoutes=require("./routes/mailRoutes")
 const protectedRoutes=require("./routes/protectedRoutes")
+const orderRoutes=require("./routes/orderRoutes")
 const connectDB=require("./dbconfig.js")
 require("dotenv").config();
 const cors= require("cors");
@@ -20,6 +21,7 @@ app.use("/api/auth",authRoutes);
 app.use("/api",productRoutes);
 app.use("/api",mailRoutes);
 app.use("/api",protectedRoutes);
+app.use("/api",orderRoutes);
 
 connectDB();
 

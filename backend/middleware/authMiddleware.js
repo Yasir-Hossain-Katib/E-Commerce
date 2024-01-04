@@ -2,22 +2,21 @@
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
 
-module.exports = (req, res, next) => {
-  // Get the token from the request headers
-  const token = req.headers.authorization;
-
-  // If no token is provided, deny access
-  if (!token) {
-    return res.status(401).json({ error: 'Unauthorized - No token provided' });
-  }
-
+const authenticateUser = async (req, res, next) => {
   try {
-    // Verify the token
-    const decodedToken = jwt.verify(token, jwtConfig.secretKey);
-    req.userId = decodedToken.userId; // Attach the user ID to the request
-    next(); // Move to the next middleware or route handler
+      // Get token from request header
+      const token = req.headers.authorization;
+
+      // Verify the token and extract user information
+      const decodedToken = jwt.verify(token, jwtConfig.secretKey);
+      req.user = decodedToken;
+
+      // Continue processing
+      next();
   } catch (error) {
-    console.error('JWT verification error:', error);
-    res.status(401).json({ error: 'Unauthorized - Invalid token' });
+      console.error('Authentication error:', error);
+      res.status(401).json({ error: 'Unauthorized' });
   }
 };
+
+module.exports=authenticateUser;

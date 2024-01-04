@@ -18,9 +18,11 @@ exports.register = async (req, res) => {
     // Hash the password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-
+    
+    const userId = new mongoose.Types.ObjectId();
     // Create a new user
     const newUser = new User({
+      userId,
       username,
       email,
       password: hashedPassword,
@@ -31,7 +33,7 @@ exports.register = async (req, res) => {
     await newUser.save();
 
     // Generate JWT for the user
-    const token = jwt.sign({ userId: newUser._id }, jwtConfig.secretKey, {
+    const token = jwt.sign({ userId }, jwtConfig.secretKey, {
       expiresIn: jwtConfig.expiresIn,
     });
 
